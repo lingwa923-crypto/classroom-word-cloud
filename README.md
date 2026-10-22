@@ -64,4 +64,3 @@ Dashboard SQL Editor 不會替 CLI 建立 migration history 記錄。若日後�
 ## 尚需完成的網站上線設定
 
 Supabase 雲端資料庫與學生提交函式已部署；前端網站尚未發布到 Netlify、Vercel 或其他靜態主機。發布後設定 `SUPABASE_URL` 與 `SUPABASE_PUBLISHABLE_KEY`，並更新 Supabase Auth 的 Site URL / Redirect URLs，即可讓講師登入並跨裝置即時同步。
-

@@ -1,0 +1,4 @@
+project_id = "classroom-word-cloud"
+
+[functions.submit-response]
+verify_jwt = false
