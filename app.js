@@ -106,7 +106,7 @@ function renderBanner() {
 
 function header({ presentation = false, student = false } = {}) {
   return `<header class="topbar ${presentation ? 'topbar-present' : ''}">
-    <a class="brand" href="/" aria-label="回到管理首頁"><span class="brand-mark">字</span><span class="brand-name">課堂文字雲<span>CLASSROOM WORD CLOUD</span></span></a>
+    <a class="brand" href="./" aria-label="回到管理首頁"><span class="brand-mark">字</span><span class="brand-name">課堂文字雲<span>CLASSROOM WORD CLOUD</span></span></a>
     ${presentation ? '<div class="live-indicator"><i></i>即時同步</div>' : student ? '<span class="safe-label">匿名參與・無須登入</span>' : `<div class="topbar-actions"><span class="storage-label ${isDemo() ? 'local-label' : ''}"><i></i>${isDemo() ? '本機預覽' : '雲端已連線'}</span>${state.user ? `<span class="user-email">${esc(state.user.email || '')}</span><button class="icon-button" id="signout-button" title="登出" aria-label="登出">${icons.logout}</button>` : ''}</div>`}
   </header>`;
 }
@@ -555,7 +555,7 @@ async function renderJoin(id) {
 }
 
 function renderStudentError(message) {
-  app.innerHTML = `${header({ student: true })}<main class="student-page"><div class="student-card student-error"><div class="student-symbol">${icons.sparkle}</div><h1>暫時無法開啟</h1><p>${esc(message)}</p><a href="/" class="button button-light">回到首頁</a></div></main>`;
+  app.innerHTML = `${header({ student: true })}<main class="student-page"><div class="student-card student-error"><div class="student-symbol">${icons.sparkle}</div><h1>暫時無法開啟</h1><p>${esc(message)}</p><a href="./" class="button button-light">回到首頁</a></div></main>`;
 }
 
 async function submitAnswer(event, activity) {
@@ -624,7 +624,7 @@ async function renderScreen(id) {
   if (!activity) return renderStudentError('找不到這場活動。');
   state.selected = activity;
   state.responses = responses;
-  app.innerHTML = `<main class="presentation-screen"><div class="present-grain"></div><header class="present-header"><a class="brand present-brand" href="/" aria-label="回到管理頁"><span class="brand-mark">字</span><span class="brand-name">課堂文字雲<span>CLASSROOM WORD CLOUD</span></span></a><div class="live-indicator"><i></i>即時同步</div><button id="fullscreen-button" class="present-fullscreen">全螢幕 ${icons.display}</button></header><section class="present-main"><div class="present-question"><span class="present-eyebrow">講師想問大家</span><h1>${esc(activityLabel(activity))}</h1><div class="present-rule"></div><div class="present-answer-count"><span class="present-count-number" id="present-count">${responses.filter(item => item.status === 'approved').length}</span><span>個想法已加入</span></div></div><div class="present-cloud-wrap" id="present-cloud">${renderCloud(responses)}</div></section><aside class="present-qr-card"><div class="present-qr-head"><span class="present-qr-kicker">加入這場對話</span><strong>掃描 QR Code 作答</strong></div><div class="present-qr-frame"><canvas id="screen-qr" width="166" height="166"></canvas><div class="qr-fallback" id="screen-qr-fallback">QR Code 載入中…</div></div><p>打開手機相機，<br />掃描後輸入你的想法。</p><span class="present-anon">匿名參與・無須登入</span></aside><footer class="present-footer"><span>讓每個想法，都成為課堂的一部分。</span><span>課堂文字雲 · ${isDemo() ? '本機示範' : '即時雲端'}</span></footer></main>`;
+  app.innerHTML = `<main class="presentation-screen"><div class="present-grain"></div><header class="present-header"><a class="brand present-brand" href="./" aria-label="回到管理頁"><span class="brand-mark">字</span><span class="brand-name">課堂文字雲<span>CLASSROOM WORD CLOUD</span></span></a><div class="live-indicator"><i></i>即時同步</div><button id="fullscreen-button" class="present-fullscreen">全螢幕 ${icons.display}</button></header><section class="present-main"><div class="present-question"><span class="present-eyebrow">講師想問大家</span><h1>${esc(activityLabel(activity))}</h1><div class="present-rule"></div><div class="present-answer-count"><span class="present-count-number" id="present-count">${responses.filter(item => item.status === 'approved').length}</span><span>個想法已加入</span></div></div><div class="present-cloud-wrap" id="present-cloud">${renderCloud(responses)}</div></section><aside class="present-qr-card"><div class="present-qr-head"><span class="present-qr-kicker">加入這場對話</span><strong>掃描 QR Code 作答</strong></div><div class="present-qr-frame"><canvas id="screen-qr" width="166" height="166"></canvas><div class="qr-fallback" id="screen-qr-fallback">QR Code 載入中…</div></div><p>打開手機相機，<br />掃描後輸入你的想法。</p><span class="present-anon">匿名參與・無須登入</span></aside><footer class="present-footer"><span>讓每個想法，都成為課堂的一部分。</span><span>課堂文字雲 · ${isDemo() ? '本機示範' : '即時雲端'}</span></footer></main>`;
   document.querySelector('#fullscreen-button').addEventListener('click', toggleFullscreen);
   drawQr('#screen-qr', linkFor('join', id), '#screen-qr-fallback');
   if (!isDemo()) subscribeToScreen(id);
@@ -706,3 +706,4 @@ window.addEventListener('storage', event => {
 });
 
 route();
+
