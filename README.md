@@ -14,7 +14,7 @@ node server.mjs
 
 瀏覽器開啟 `http://localhost:4173`。沒有雲端設定時會進入本機示範模式，活動和回答保存在目前瀏覽器的 localStorage；同一台電腦、同一個網址下可以另開學生作答頁和投影頁預覽。這個示範模式不會跨裝置同步。
 
-第一次載入需要網路連線，以讀取 Supabase JavaScript SDK、QR Code 產生器與中文字型；未設定雲端時，示範資料仍只存在本機瀏覽器。
+第一次載入需要網路連線，以讀取 Supabase JavaScript SDK 與中文字型；QR Code 產生器已隨網站檔案一起提供。未設定雲端時，示範資料仍只存在本機瀏覽器。
 
 本課堂文字雲已連接 Supabase 專案 `jrazhjyrpetwwxycnhbz`。在同一個 PowerShell 視窗設定公開連線值後，就能用雲端模式預覽：
 
@@ -47,6 +47,8 @@ Dashboard SQL Editor 不會替 CLI 建立 migration history 記錄。若日後�
 部署流程在 [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)。每次推送到 `main`，GitHub Actions 會執行 `node build.mjs`，產生 `dist/` 並發布至 GitHub Pages。GitHub Pages 已設定為 GitHub Actions 來源。
 
 這個 GitHub Free 帳號需使用公開 repository 才能啟用 Pages，因此本 repository 與網站原始碼目前都是公開的。部署流程只把 Supabase URL 與 publishable key 寫入瀏覽器設定檔；這兩個值是公開前端設定。不可把 service role 或 secret key 放進前端或 workflow。
+
+QR Code 產生器採用 MIT 授權的 qrcode-generator，授權與來源列於 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)。
 
 本機預覽設定範例仍在 [`.env.example`](.env.example)。
 

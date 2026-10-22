@@ -7,7 +7,7 @@ const output = resolve(root, 'dist');
 await rm(output, { recursive: true, force: true });
 await mkdir(output, { recursive: true });
 
-for (const file of ['index.html', 'app.js', 'styles.css']) {
+for (const file of ['index.html', 'app.js', 'styles.css', 'qrcode-generator.js']) {
   const contents = await readFile(resolve(root, file));
   await writeFile(resolve(output, file), contents);
 }

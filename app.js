@@ -354,14 +354,42 @@ function subscribeToResponses(id) {
 function drawQr(canvasSelector, value, fallbackSelector) {
   const canvas = document.querySelector(canvasSelector);
   const fallback = document.querySelector(fallbackSelector);
-  if (!canvas || !window.QRCode?.toCanvas) {
+  if (!canvas || typeof window.qrcode !== 'function') {
     if (fallback) fallback.textContent = 'QR Code 載入失敗，請複製網址';
     return;
   }
-  window.QRCode.toCanvas(canvas, value, { width: canvas.width, margin: 1, color: { dark: '#17243a', light: '#ffffff' }, errorCorrectionLevel: 'M' }, error => {
-    if (error && fallback) fallback.textContent = 'QR Code 載入失敗，請複製網址';
-    else if (fallback) fallback.classList.add('hidden');
-  });
+  try {
+    const qr = window.qrcode(0, 'M');
+    qr.addData(value);
+    qr.make();
+
+    const context = canvas.getContext('2d');
+    if (!context) throw new Error('Canvas is not available');
+    const moduleCount = qr.getModuleCount();
+    const quietZone = 4;
+    const cellSize = canvas.width / (moduleCount + quietZone * 2);
+    context.fillStyle = '#ffffff';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = '#17243a';
+
+    for (let row = 0; row < moduleCount; row += 1) {
+      for (let col = 0; col < moduleCount; col += 1) {
+        if (!qr.isDark(row, col)) continue;
+        const left = Math.floor((col + quietZone) * cellSize);
+        const top = Math.floor((row + quietZone) * cellSize);
+        const right = Math.ceil((col + quietZone + 1) * cellSize);
+        const bottom = Math.ceil((row + quietZone + 1) * cellSize);
+        context.fillRect(left, top, right - left, bottom - top);
+      }
+    }
+    if (fallback) fallback.classList.add('hidden');
+  } catch (error) {
+    console.error('Unable to generate QR Code', error);
+    if (fallback) {
+      fallback.textContent = 'QR Code 載入失敗，請複製網址';
+      fallback.classList.remove('hidden');
+    }
+  }
 }
 
 function createActivity() {
