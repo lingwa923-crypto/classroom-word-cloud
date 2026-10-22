@@ -36,7 +36,7 @@ Supabase 後端已部署到新加坡區域的免費專案：
 - 資料庫遷移：[`supabase/migrations/202610200001_initial.sql`](supabase/migrations/202610200001_initial.sql) 已透過 Dashboard SQL Editor 執行，建立活動、回答、講師列權限、Realtime publication 與伺服器防濫發資料表。
 - Edge Function：`https://jrazhjyrpetwwxycnhbz.supabase.co/functions/v1/submit-response` 已部署。JWT 驗證已關閉，學生不需登入即可呼叫；函式會檢查字數、封鎖詞、重複提交與來源速率限制。
 
-講師帳號由網站的「建立講師帳號」建立，與 Supabase Dashboard 登入帳號分開。正式前端網址確定後，請把它設為 Supabase Auth 的 Site URL，並加入 Redirect URLs。若之後改用 CLI 更新函式，請使用 `npx supabase functions deploy submit-response --no-verify-jwt`；`supabase/config.toml` 已保留相同設定。
+講師帳號由網站的「建立講師帳號」建立，與 Supabase Dashboard 登入帳號分開。Supabase Auth 的 Site URL 已設為正式 GitHub Pages 網址。網站目前未指定額外的 `redirectTo`，若日後新增此設定，請先把精確網址加入 Redirect URLs。若之後改用 CLI 更新函式，請使用 `npx supabase functions deploy submit-response --no-verify-jwt`；`supabase/config.toml` 已保留相同設定。
 
 Dashboard SQL Editor 不會替 CLI 建立 migration history 記錄。若日後第一次改用 `supabase db push`，本遷移可能再次執行；檔案中的建立語句採用 `if not exists` 或 `create or replace`，可重複套用。
 
@@ -61,5 +61,5 @@ Dashboard SQL Editor 不會替 CLI 建立 migration history 記錄。若日後�
 
 ## 網站上線狀態
 
-Supabase 雲端資料庫、學生提交函式與 GitHub Pages 前端都已部署。Supabase Auth 的 Site URL 應設為上述正式網站網址；若新增自訂導回網址，需同步加入 Redirect URLs。
+Supabase 雲端資料庫、學生提交函式與 GitHub Pages 前端都已部署，Supabase Auth 的 Site URL 也已更新為正式網站網址。
 
