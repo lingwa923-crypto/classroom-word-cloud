@@ -40,17 +40,15 @@ Supabase 後端已部署到新加坡區域的免費專案：
 
 Dashboard SQL Editor 不會替 CLI 建立 migration history 記錄。若日後第一次改用 `supabase db push`，本遷移可能再次執行；檔案中的建立語句採用 `if not exists` 或 `create or replace`，可重複套用。
 
-## 雲端部署前端
+## GitHub Pages 前端
 
-網站是靜態檔案，可部署到 Netlify、Vercel 或其他靜態主機。以 Netlify 為例：
+正式網站：https://lingwa923-crypto.github.io/classroom-word-cloud/
 
-1. 將專案資料夾放進自己的 Git repository。
-2. 在 Netlify 新增網站並選擇該 repository。
-3. Build command 設為 `node build.mjs`，Publish directory 設為 `dist`。
-4. 在網站環境變數加入 `SUPABASE_URL` 和 `SUPABASE_PUBLISHABLE_KEY`，再重新部署。
-5. 到 Supabase Auth 設定正式網站的 Site URL / Redirect URLs。
+部署流程在 [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)。每次推送到 `main`，GitHub Actions 會執行 `node build.mjs`，產生 `dist/` 並發布至 GitHub Pages。GitHub Pages 已設定為 GitHub Actions 來源。
 
-環境變數範例也在 [`.env.example`](.env.example)。`build.mjs` 只把 URL 和公開的 publishable key 寫進部署檔；不要將任何 service role 或 secret key 設成前端環境變數。
+這個 GitHub Free 帳號需使用公開 repository 才能啟用 Pages，因此本 repository 與網站原始碼目前都是公開的。部署流程只把 Supabase URL 與 publishable key 寫入瀏覽器設定檔；這兩個值是公開前端設定。不可把 service role 或 secret key 放進前端或 workflow。
+
+本機預覽設定範例仍在 [`.env.example`](.env.example)。
 
 ## 使用方式
 
@@ -61,6 +59,7 @@ Dashboard SQL Editor 不會替 CLI 建立 migration history 記錄。若日後�
 - 投影頁從管理頁開啟，會使用已登入的講師工作階段讀取回答；它有全螢幕模式，QR Code 會留在畫面供學生掃描。
 - 回答依瀏覽器繁體中文分詞計算詞頻，字體大小依出現次數調整。講師可匯出 UTF-8 CSV。
 
-## 尚需完成的網站上線設定
+## 網站上線狀態
 
-Supabase 雲端資料庫與學生提交函式已部署；前端網站尚未發布到 Netlify、Vercel 或其他靜態主機。發布後設定 `SUPABASE_URL` 與 `SUPABASE_PUBLISHABLE_KEY`，並更新 Supabase Auth 的 Site URL / Redirect URLs，即可讓講師登入並跨裝置即時同步。
+Supabase 雲端資料庫、學生提交函式與 GitHub Pages 前端都已部署。Supabase Auth 的 Site URL 應設為上述正式網站網址；若新增自訂導回網址，需同步加入 Redirect URLs。
+
